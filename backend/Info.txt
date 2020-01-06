@@ -1,5 +1,12 @@
 to run database:
-docker-compose up
+- run this command anywhere: docker-compose up
+- go to the backend directory and run: node server.js
+- go to: localhost:3000
+- adminer: localhost:8000
 
-check if exitited: docker ps -a
-if up: docker stop [name or container id]
+to stop the database:
+- stop mysql: docker stop backend_db_1
+- stop adminer: doker stop backend
+- or just cntrl+c
+- check if exitited: docker ps -a
+- if any container is still running: docker stop [name or container id]
