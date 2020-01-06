@@ -1,0 +1,5 @@
+to run database:
+docker-compose up
+
+check if exitited: docker ps -a
+if up: docker stop [name or container id]
