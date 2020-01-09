@@ -12,12 +12,68 @@ const getApts = (req, res) => {
         if(err) {
             throw err;
         }
+        for(var i = 0; i < results.rows.length; i++) {
+            results.rows[i] = domainAppointment(results.rows[i]);
+        }
         res.status(200).json(results.rows);
+    });
+}
+
+const domainAppointment = (row) => {
+    return {
+        petName: row.petname,
+        petOwner: row.petowner,
+        aptDate: row.aptDate,
+        aptNotes: row.aptnotes,
+        id: row.id
+    }
+}
+
+const addApt = (req, res) => {
+    const { petName, petOwner, aptDate, aptNotes } = req.body;
+  
+    pool.query('INSERT INTO appointments (petName, petOwner, aptDate, aptNotes) VALUES ($1, $2, $3, $4)',
+    [petName, petOwner, aptDate, aptNotes],
+    (error, results) => {
+      if(error) {
+        throw error;
+      }
+      res.status(201).send(`Appointment added for: ${petName}`);
+    });
+}
+
+const editApt = (req, res) => {
+    const id = req.params.id;
+    const { petName, petOwner, aptDate, aptNotes } = req.body;
+
+    pool.query('UPDATE appointments SET petName = $1, petOwner = $2, aptDate = $3, aptNotes = $4 WHERE id = $5',
+    [petName, petOwner, aptDate, aptNotes, id],
+    (error) => {
+        if(error) {
+            throw error;
+        }
+        res.status(200).send(`Appointment updated with id: ${id}`);
+    });
+}
+
+
+const removeApt = (req, res) => {
+    const id = req.params.id;
+
+    pool.query('DELETE FROM appointments WHERE id = $1', [id],
+    (error, results) => {
+        if(error) {
+            throw error;
+        }
+        res.status(200).send(`Appointment removed with id: ${id}`);
     });
 }
 
 module.exports = {
     getApts,
+    addApt,
+    editApt,
+    removeApt,
 };
 
 

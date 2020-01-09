@@ -42,17 +42,18 @@
       SearchAppointments
     },
     mounted() {
-      axios.get("./data/appointments.json")
+      //axios.get("./data/appointments.json")
+      axios.get("http://localhost:3000/appointments")
       .then(
         response => (this.appointments = response.data.map(item => {
-          item.aptId = this.aptIndex;
+          item.aptId = item.id;
           this.aptIndex++;
           return item;
         }))
       );
     },
     computed: {
-      searchedApts: function() {
+      searchedApts: function() { 
         return this.appointments.filter(item => {
           return(
             item.petName.toLowerCase().match(this.searchTerms.toLowerCase()) ||
