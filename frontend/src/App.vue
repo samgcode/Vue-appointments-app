@@ -85,9 +85,11 @@
         apt.aptId = this.aptIndex;
         this.aptIndex++;
         this.appointments.push(apt);
+        this.addApt(apt);
       },
       removeItem: function (apt) {
         this.appointments = _.without(this.appointments, apt);
+        this.removeApt(apt);
       },
 
       editItem: function (id, field, text) {
@@ -95,7 +97,40 @@
           aptId: id
         });
         this.appointments[aptIndex][field] = text;
-      }
+      },
+
+      addApt: function (apt) {
+        //create a new http request
+        let xhr = new XMLHttpRequest();
+
+        console.log('test');
+
+        xhr.open('POST', 'http://localhost:3000/appointments');
+
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send(`petName=${apt.petName}&petOwner=${apt.petOwner}&aptDate=${apt.aptDate}&aptNotes=${apt.aptNotes}`);
+
+        xhr.onload = () => {
+          if(xhr.status != 201) {
+            alert(`Error ${xhr.status}: ${xhr.statusText}`);
+          }
+        };
+      },
+      
+      removeApt: function(apt) {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('DELETE', `http://localhost:3000/appointments/${apt.id}`);
+        xhr.send();
+
+        xhr.onload = () => {
+          if(xhr.status != 200) {
+            alert(`Error ${xhr.status}: ${xhr.statusText}`);
+          } 
+        };
+      },
+
+      //editApt: function(apt)
     }
   };
 </script>

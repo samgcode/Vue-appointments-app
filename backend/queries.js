@@ -23,7 +23,7 @@ const domainAppointment = (row) => {
     return {
         petName: row.petname,
         petOwner: row.petowner,
-        aptDate: row.aptDate,
+        aptDate: row.aptdate,
         aptNotes: row.aptnotes,
         id: row.id
     }

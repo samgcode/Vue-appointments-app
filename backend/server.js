@@ -35,7 +35,7 @@ module.exports = app;
 CREATE TABLE IF NOT EXISTS appointments (
 	petName text, 
 	petOwner text, 
-	aptDate timestamp without time zone, 
+	aptDate varchar (30) default TO_CHAR(current_timestamp, 'yyyy-mm-dd hh:mi:ss AM') , 
 	aptNotes text,
 	id SERIAL PRIMARY KEY
 );
@@ -46,27 +46,28 @@ INSERT INTO appointments (petName, petOwner, aptDate, aptNotes)
 VALUES (
 	'Spot',
 	'Constance Smith',
-	'2017-07-24 08:30',
+	'2017-07-24 08:30 pm',
 	'This German Shepherd is having some back pain'
 ),
 (
 	'Goldie',
 	'Barot Bellingham',
-	'2017-07-22 15:50',
+	'2017-07-22 3:50 pm',
 	'This Goldfish has some weird spots in the belly'
 ),
 (
 	'Mitten',
 	'Hillary Goldwyn',
-	'2017-07-21 9:15',
+	'2017-07-21 9:15 pm',
 	'Cat has excessive hairballs'
 ),
 (
 	'Buffy',
 	'Hassum Harrod',
-	'2017-07-20 15:30',
+	'2017-07-20 3:30 pm',
 	'This Chihuahua has not eaten for three days and is lethargic'
 );
 
 SELECT * FROM appointments;
+
 */
