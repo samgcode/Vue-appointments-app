@@ -97,6 +97,8 @@
           aptId: id
         });
         this.appointments[aptIndex][field] = text;
+        console.log(this.appointments[aptIndex].id);
+        this.editApt(this.appointments[aptIndex]);
       },
 
       addApt: function (apt) {
@@ -130,7 +132,18 @@
         };
       },
 
-      //editApt: function(apt)
+      editApt: function(apt) {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('PUT', `http://localhost:3000/appointments/${apt.id}`);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(`petName=${apt.petName}&petOwner=${apt.petOwner}&aptDate=${apt.aptDate}&aptNotes=${apt.aptNotes}`);
+        xhr.onload = () => {
+          if (xhr.status != 200) {
+            alert(`Error ${xhr.status}: ${xhr.statusText}`);
+          }
+        };
+      }
     }
   };
 </script>
